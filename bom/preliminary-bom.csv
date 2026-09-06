@@ -1,0 +1,15 @@
+Item,Category,Candidate_Part_or_Module,Quantity,Function,Package_or_Module,Estimated_Unit_Cost_USD,Manufacturer,MPN,Source_URL,Planning_Status,Notes
+BB-001,Controller,ESP32-C3 module family (XIAO ESP32C3 or equivalent),1,Main MCU + connectivity,Module,TBD - live sourcing required,TBD,TBD,TBD,PLANNING_ONLY,Exact module to be chosen after firmware/IO budget lock
+BB-002,PM Sensor,Indoor PM2.5 sensor module family (PMSA003I/SPS30 class),1,Particulate trend sensing,Module,TBD - live sourcing required,TBD,TBD,TBD,PLANNING_ONLY,Choose interface and warm-up profile from datasheet
+BB-003,VOC Sensor,TVOC sensor family (SGP30/SGP40/BME680 class),1,VOC trend sensing,Module/THT,TBD - live sourcing required,TBD,TBD,TBD,PLANNING_ONLY,Final part must include baseline guidance in datasheet
+BB-004,TempHumidity Sensor,Temperature/humidity sensor family (SHT31/BME280 class),1,Context signal for trend interpretation,Module/THT,TBD - live sourcing required,TBD,TBD,TBD,PLANNING_ONLY,May merge with VOC sensor if chosen part supports both
+BB-005,Regulation,3.3V regulator + filtering passives set,1 set,Stable rail for sensors and MCU,SMD mix,TBD - live sourcing required,TBD,TBD,TBD,PLANNING_ONLY,Values finalized in schematic and validated by ERC/DRC
+BB-006,Protection,USB input protection components set,1 set,Input protection and robustness,SMD mix,TBD - live sourcing required,TBD,TBD,TBD,PLANNING_ONLY,Exact strategy selected during schematic design
+BB-007,UI,Status LED(s) + tactile button,1 set,Local user feedback and mark events,SMD/THT mix,TBD - live sourcing required,TBD,TBD,TBD,PLANNING_ONLY,Non-color-only status required
+BB-008,Connectors,USB-C connector + debug/programming header,1 set,Power/data and bring-up access,SMD/THT mix,TBD - live sourcing required,TBD,TBD,TBD,PLANNING_ONLY,Header footprint should support common debug adapters
+BB-009,PCB,Custom 2-layer PCB fabrication,1,Device carrier board,PCB,TBD - fabrication quote required,TBD,TBD,TBD,PLANNING_ONLY,Gerbers and fab outputs generated at maturity
+BB-010,Enclosure,3D-printable or off-the-shelf vented enclosure,1,Mechanical protection and airflow guidance,Mechanical,TBD - live sourcing required,TBD,TBD,TBD,PLANNING_ONLY,Keep serviceable and repairable
+BB-011,Cabling,USB-C cable (data-capable),1,Power and setup link,Cable,TBD - live sourcing required,TBD,TBD,TBD,PLANNING_ONLY,Include known-good cable in bring-up checklist
+BB-012,Fasteners,Standoffs/screws/nuts assortment,1 set,Assembly and mounting,Hardware,TBD - live sourcing required,TBD,TBD,TBD,PLANNING_ONLY,Exact lengths depend on enclosure choice
+BB-013,Dev Access,USB-to-UART/debug adapter (if needed),1,Bring-up and recovery accessory,Accessory,TBD - live sourcing required,TBD,TBD,TBD,PLANNING_ONLY,Non-schematic support item
+BB-014,Power Supply,Certified USB wall adapter 5V,1,Safe external power source,Accessory,TBD - live sourcing required,TBD,TBD,TBD,PLANNING_ONLY,Non-schematic support item; user may already own
