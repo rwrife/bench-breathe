@@ -3,75 +3,95 @@
 USB-powered ESP32-C3 workshop air-quality logger that tracks PM2.5 and VOC trends locally to help makers improve ventilation habits without cloud accounts.
 
 ## Overview
-Bench Breathe is a safe, low-voltage, local-first open-hardware project for hobby workshops and desk labs. It samples particulate and volatile-organic-compound (VOC) indicators, stores trend history locally, and serves a local companion dashboard for setup, calibration prompts, and export.
 
-## Motivation
-Makers often rely on smell or guesswork to decide when to open a window or run extraction fans. Bench Breathe provides clear trend visibility and event logging so ventilation decisions are easier and more consistent.
+Bench Breathe is a low-voltage, local-first open-hardware project for hobby workshops and desk labs. It samples particulate and VOC indicators with temperature/humidity context, stores bounded trend history locally, and provides a local companion dashboard for setup, quality states, event notes, and explicit export.
 
-## Target users
-- Electronics hobbyists and makers using soldering/flux
-- 3D-printing users monitoring enclosure/workbench air trends
-- Home workshop users who want local logging without cloud lock-in
+**Bench Breathe is a non-certified advisory trend logger.** It does not determine whether air is safe and is not a medical, emergency, life-safety, or occupational-exposure instrument.
 
-## Concrete use cases
-- Track PM and VOC trends during soldering sessions
-- Compare baseline vs. active-work periods
-- Log manual ventilation actions (window open, fan on) and see effect
-- Export local data for personal analysis/troubleshooting
+## Intended users and use cases
 
-## Intended end-to-end workflow
-1. Power the device from USB-C (SELV 5V only).
-2. Connect from phone/desktop browser on local network or USB fallback.
-3. Run first-time setup and baseline capture.
-4. Start a work session and optionally mark ventilation events.
-5. Review local trend charts and session summaries.
-6. Export CSV/JSON snapshots under user control.
+- Electronics hobbyists comparing trends during soldering or rework.
+- 3D-printing users comparing baseline and active-print periods.
+- Home workshop users recording manual actions such as opening a window or enabling an independently controlled extractor.
+- Makers exporting their own local CSV/JSON data for troubleshooting and analysis.
 
-## MVP features
-- ESP32-C3 firmware with deterministic sample cadence
-- PM2.5 + VOC + temperature/humidity sensing pipeline
-- Local buffering with bounded retention and explicit data deletion
-- Local web companion for status, history, calibration prompts, and export
-- Session/event markers (work started, fan enabled, window opened)
-- Offline behavior documentation and recovery/reset flow
+## MVP workflow
 
-## Non-goals (MVP)
-- No cloud account, cloud sync, or remote telemetry service
-- No automatic fan/mains switching or relay control
-- No compliance/certified industrial hygiene claims
-- No medical, emergency, life-safety, or occupational-limit guarantee
+1. Power the device from a reputable 5 V USB SELV source.
+2. Connect from a phone/desktop browser on the local network or use USB serial fallback.
+3. Complete time-bounded setup and baseline/warm-up prompts.
+4. Record a work session and optional ventilation event labels.
+5. Review local trends, freshness, quality states, and data gaps.
+6. Export or delete local data through an explicit user action.
 
-## Privacy, permissions, and data storage
-- Local-first by default; no mandatory external service
-- Device stores only device telemetry/configuration and user-added event labels
-- Companion app stores user data locally and exports only by explicit user action
-- No microphone/camera/location requirement in MVP
+## Frozen MVP baseline
 
-## Hardware safety limits
-- Prototype scope is SELV only (USB 5V)
-- No mains wiring, no high-voltage interfaces, no safety-critical control loops
-- Advisory trends only; not a certified exposure or safety instrument
+The normative baseline is in [`hardware/requirements.md`](hardware/requirements.md), with subsystem ownership, dependencies, evidence gates, and the risk register in [`PLAN.md`](PLAN.md).
 
-## Planned editable source tree
-- `hardware/kicad/bench-breathe.kicad_pro`
-- `hardware/kicad/bench-breathe.kicad_sch`
-- `hardware/kicad/bench-breathe.kicad_pcb` (when custom PCB starts)
+Key constraints:
 
-> Final validated BOM data belongs in KiCad schematic symbol properties and is exported to `bom/bom.csv`.
+- USB 5 V SELV only; <=250 mA steady-state target and <=500 mA peak.
+- PM2.5, VOC proxy/index, temperature, and humidity trend channels.
+- Default 2 s acquisition, bounded local retention, and deterministic rollover.
+- Local HTTP/JSON app interface with USB serial setup/recovery/export fallback.
+- Offline sampling without mandatory internet, cloud account, or outbound telemetry.
+- Editable KiCad hardware sources and schematic-owned Manufacturer/MPN BOM data.
+- Advisory trend language only; static, simulation, bench, and field evidence remain distinct.
 
-## Current status
-Scaffold and backlog only. No completed KiCad design, firmware build, app build, ERC/DRC report, or physical test evidence is claimed yet.
+## Explicit non-goals and safety limits
 
-## Milestones
-1. Requirements + architecture lock
-2. Datasheet-backed part selection and KiCad schematic
-3. PCB/layout + ERC/DRC + BOM export
-4. Firmware + local companion app integration
-5. Bring-up docs, assembly docs, and release artifacts
+- **No mains wiring or control.** No relays, fan switching, actuators, machinery control, or safety interlocks.
+- **No hazardous-voltage or USB-PD operation.** The project is nominal 5 V USB SELV only.
+- **No medical, emergency, fire/smoke/gas-alarm, life-safety, or occupational-limit function.**
+- **No certified accuracy or safe/unsafe determination.** Placement, warm-up, drift, contamination, airflow, and faults can produce misleading data.
+- **No mandatory cloud service or internet access.**
+- Indoor, dry, non-condensing hobby-workshop use only; not for outdoor, explosive, or industrial-process environments.
 
-## Development quickstart (documentation phase)
+Users must follow tool/material manufacturer guidance and appropriate ventilation and PPE practice independently of this device.
+
+## Architecture at a glance
+
+- **Hardware:** USB input/protection/regulation, ESP32-C3, PM/VOC/temp-humidity interfaces, status/input, debug/test access, PCB, and enclosure interface.
+- **Firmware:** deterministic acquisition, validity states, bounded retention, atomic configuration, versioned local API, and serial recovery.
+- **Companion web app:** setup, status/history, event notes, configuration, explicit export/delete, and accessible advisory messaging.
+- **Shared protocol:** [`docs/protocol.md`](docs/protocol.md) is currently Draft v0; issue #7 must finalize versioned HTTP/serial schemas, units, limits, authorization, quality/error states, and compatibility rules before integration.
+
+The device remains authoritative for sensor state, timestamps, configuration limits, and retained records. The app presents that contract and must not turn null/invalid values into apparently valid measurements. For the MVP, compiled app assets are served by the device for offline same-origin use. A physical, time-bounded setup action issues the per-device local credential; this reduces casual LAN access but does not make cleartext HTTP confidential or safe for internet exposure.
+
+## Source tree
+
+- `hardware/requirements.md` — normative MVP requirements and safety boundaries
+- `hardware/kicad/bench-breathe.kicad_pro` — planned editable KiCad project
+- `hardware/kicad/bench-breathe.kicad_sch` — planned editable schematic and BOM source of truth
+- `hardware/kicad/bench-breathe.kicad_pcb` — planned editable PCB
+- `firmware/` — device firmware and verification
+- `app/` — local companion web app
+- `docs/protocol.md` — device/app contract
+- `bom/bom.csv` — future generated tracking BOM from schematic properties
+
+The current `bom/preliminary-bom.csv` is planning input only. It is not a validated or fabrication-ready BOM.
+
+## Project status
+
+| Milestone | Status |
+|---|---|
+| M1 — Requirements, architecture, safety, and risk baseline | Baseline documented |
+| M2 — Datasheet-backed component selection | Not started |
+| M3 — Editable KiCad schematic and ERC | Not started |
+| M4 — Schematic-source BOM export | Not started |
+| M5 — PCB layout and DRC | Not started |
+| M6 — Firmware baseline | Not started |
+| M7 — Companion app baseline | Not started |
+| M8 — Integration and bench bring-up | Not started |
+| M9 — Mature fabrication/release bundle | Not started |
+
+No completed KiCad design, firmware/app build, simulation, ERC/DRC result, assembled prototype, bench measurement, field result, or certification is claimed at this stage.
+
+## Development start
+
 ```bash
 git clone https://github.com/rwrife/bench-breathe.git
 cd bench-breathe
 ```
-Review `PLAN.md` and the issue backlog to execute one vertical slice at a time.
+
+Review `hardware/requirements.md`, `PLAN.md`, and the issue backlog before implementing a subsystem. Work should proceed in dependency order and attach the evidence named by the relevant milestone; documentation alone does not satisfy a hardware or physical-test gate.
