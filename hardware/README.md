@@ -9,8 +9,18 @@ Bench Breathe hardware is a USB-powered sensing node with:
 - User input/status (button + non-color-only indicator)
 - USB-C power/data path and programming/debug header
 
-## Controller choice
-**ESP32-C3 module family** is the baseline due to low cost, Wi-Fi support, and mature toolchain support for local web workflows.
+## Selected component baseline
+
+Issue #2 selected exact datasheet-backed parts for the first schematic pass:
+
+- Espressif `ESP32-C3-WROOM-02-N4` controller module
+- Sensirion `SPS30` particulate module
+- Sensirion `SGP40-D-R4` VOC sensor
+- Sensirion `SHT40-AD1B-R2` temperature/humidity sensor
+- TI `TPS62162DSGR` 3.3 V buck and `TPS22919DCKR` PM-rail load switch
+- GCT `USB4105-GF-A`, TI `TPD4E05U06DQAR`, Bourns `MF-MSMF050-2`, and Diodes Incorporated `SMBJ5.0A-13-F` for the USB input/protection baseline
+
+See [`component-selection.md`](component-selection.md) for pin/electrical/package checks, direct manufacturer documents, the static current budget, sourcing snapshot, and open blockers. Selection does not imply a completed circuit or physical validation.
 
 ## Interfaces
 - I2C bus for VOC + temp/humidity sensors
