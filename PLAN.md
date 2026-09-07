@@ -73,7 +73,7 @@ The normative details and acceptance evidence are in `hardware/requirements.md`.
 | Milestone | Scope | Exit evidence | Status |
 |---|---|---|---|
 | M1 — Requirements and risk baseline | Measurable requirements, architecture, safety, risk register | Cross-document review against issue #1 | Baseline documented; implementation evidence not started |
-| M2 — Component selection | Select exact controller/sensors/power/protection parts and populate Manufacturer/MPN | Manufacturer datasheets cached; pin/electrical decisions cited | Not started |
+| M2 — Component selection | Select exact controller/sensors/power/protection parts and populate Manufacturer/MPN | Manufacturer datasheets reviewed; pin/electrical decisions cited in `hardware/component-selection.md`; metadata carried in editable KiCad staging sheet | Static selection complete; no circuit/bench evidence |
 | M3 — KiCad schematic | Editable project and complete schematic | ERC output, analyzer output, documented exceptions | Not started |
 | M4 — BOM export | Generate source-of-truth tracking BOM | `bom/bom.csv` regenerated from schematic properties | Not started |
 | M5 — PCB layout | Place/route board, keepouts, thermal/current paths | DRC and applicable layout analyzer evidence | Not started |

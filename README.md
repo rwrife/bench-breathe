@@ -61,9 +61,10 @@ The device remains authoritative for sensor state, timestamps, configuration lim
 ## Source tree
 
 - `hardware/requirements.md` — normative MVP requirements and safety boundaries
-- `hardware/kicad/bench-breathe.kicad_pro` — planned editable KiCad project
-- `hardware/kicad/bench-breathe.kicad_sch` — planned editable schematic and BOM source of truth
+- `hardware/kicad/bench-breathe.kicad_pro` — editable KiCad project container
+- `hardware/kicad/bench-breathe.kicad_sch` — M2 component-selection carrier and BOM-property source; issue #3 owns the complete electrical schematic
 - `hardware/kicad/bench-breathe.kicad_pcb` — planned editable PCB
+- `hardware/component-selection.md` — exact M2 parts, manufacturer-datasheet checks, static power budget, and dated availability snapshot
 - `firmware/` — device firmware and verification
 - `app/` — local companion web app
 - `docs/protocol.md` — device/app contract
@@ -76,7 +77,7 @@ The current `bom/preliminary-bom.csv` is planning input only. It is not a valida
 | Milestone | Status |
 |---|---|
 | M1 — Requirements, architecture, safety, and risk baseline | Baseline documented |
-| M2 — Datasheet-backed component selection | Not started |
+| M2 — Datasheet-backed component selection | Static selection complete; physical validation not started |
 | M3 — Editable KiCad schematic and ERC | Not started |
 | M4 — Schematic-source BOM export | Not started |
 | M5 — PCB layout and DRC | Not started |
