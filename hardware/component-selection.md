@@ -1,10 +1,10 @@
 # Datasheet-backed component selection
 
-Status: **M2 static component selection complete; electrical design and physical validation not started**
+Status: **M2 component selection retained in the complete M3 schematic; physical validation not started**
 
 Snapshot date: **2026-09-07 UTC**
 
-This document records the exact parts selected for the first schematic pass. Manufacturer datasheets are the electrical ground truth. The editable staging sheet at [`kicad/bench-breathe.kicad_sch`](kicad/bench-breathe.kicad_sch) carries `Manufacturer`, `MPN`, `Datasheet`, `Package`, and `BOM Comments` properties plus `LCSC` only for manufacturer-validated matches. It intentionally has no electrical connectivity; issue #3 owns functional symbols, wiring, footprints, ERC, and the complete application circuits.
+This document records the exact parts selected for the first schematic pass. Manufacturer datasheets are the electrical ground truth. The editable schematic at [`kicad/bench-breathe.kicad_sch`](kicad/bench-breathe.kicad_sch) now carries functional symbols, application circuits, footprints, named nets, and `Manufacturer`, `MPN`, `Datasheet`, `Package`, and `BOM Comments` properties plus `LCSC` only for manufacturer-validated matches. Issue #3 adds the complete A0 electrical capture while retaining the M2 selections.
 
 ## Selected parts
 
@@ -109,18 +109,17 @@ Queries were run on 2026-09-07 UTC. LCSC fields below come from the component ca
 
 Catalog/API source: `https://jlcsearch.tscircuit.com/api/search?q=<MPN>&limit=10&full=true`, cross-checked with exact-code resolver records before writing LCSC properties. Manufacturer names and electrical/package claims come from manufacturer documents, not distributor descriptions. The nine manufacturer-validated LCSC one-unit fields total **$14.61**, excluding SPS30, passives, PCB, cable, enclosure, and accessories; therefore no complete BOM-cost claim is made. Re-run authorized-channel stock, pricing, and PCN/EOL/NRND checks immediately before ordering. No long-term supply guarantee is claimed.
 
-## Explicit open blockers for issue #3 and later
+## Remaining layout, firmware, and physical-validation blockers
 
-1. U1, U2, U3, U6, U7, and J1 use generic pin-count symbols in the M2 staging sheet. Functional symbols and physical footprints must be created or selected and checked pin-by-pin/pad-by-pad against the cited datasheets before wiring.
-2. USB-C CC advertisement sensing, USB 2.0 configuration state, the 100 mA recovery ceiling, the 2.5 mA suspend ceiling, and brownout behavior are not implemented by component selection alone.
-3. U5 magnetics/capacitors and all ESD/TVS placement/routing remain schematic/layout work. The SMBJ part is physically large; issue #3/#5 may substitute an exact lower-capacitance/smaller VBUS TVS only after equivalent standoff/clamp/energy checks and an MPN update.
-4. U3/U4 are small exposed-sensor DFNs with contamination, soldering, copper, and thermal-placement constraints. A module alternative remains acceptable only through a reviewed requirements/MPN change.
-5. The SPS30 cable/mating connector is a required non-IC BOM item and must not be omitted from issue #4.
-6. Static power arithmetic does not satisfy simulation, bench, or field evidence. No prototype has been built or measured.
+1. USB-C CC1/CC2 advertisement voltages are routed to ESP32 ADC-capable GPIO0/GPIO1 and the PM rail defaults off in hardware, but USB configuration/suspend state, current ceilings, droop handling, and brownout-loop prevention remain firmware/bench gates.
+2. ESD/TVS proximity, USB routing, buck switch-loop geometry, antenna keepout, sensor thermal separation, and exposed-sensor copper/contamination controls remain PCB-layout work for issue #5.
+3. U3/U4 are small exposed-sensor DFNs with contamination, soldering, copper, and thermal-placement constraints. The project-local SGP40 land pattern follows Sensirion Figure 14 and KiCad upstream review MR 2511; manufacturing and assembly suitability remain unproven.
+4. The SPS30 module, ZHR-5 mating cable/housing, and board-side J2 connector are required BOM/system items and must not be omitted from issue #4.
+5. Static power arithmetic and clean ERC do not satisfy simulation, bench, or field evidence. No prototype has been built or measured.
 
 ## Evidence classification
 
-- **Static performed:** manufacturer-PDF review, exact-MPN metadata population, live availability query, staging-sheet ERC.
-- **Simulation:** not performed; no complete circuit exists.
+- **Static performed:** manufacturer-PDF review, exact-MPN metadata population, live availability query, complete schematic pin/net validation, and clean KiCad 9 ERC.
+- **Simulation:** not performed in issue #3.
 - **Bench:** not performed; no prototype exists.
 - **Field:** not performed.

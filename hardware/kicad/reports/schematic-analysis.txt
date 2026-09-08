@@ -1,0 +1,160 @@
+=== Design Analysis ===
+
+--- certification ---
+  [1] INFO CERT-001: Wireless module detected: U1
+      Detail: FCC Part 15: Wireless module detected: U1
+      Stages: schematic
+
+--- component_derating ---
+  [2] INFO VD-004: C4 (100nF 50V X7R) is over-designed for +3V3 (50V on 3.3V rail)
+      Detail: 50V-rated capacitor on a 3.3V rail — margin 93.4%.
+      Fix:    Consider 10V rating — 50V is significantly over-designed for a 3.3V rail
+      Stages: schematic
+  [3] INFO VD-004: C8 (100nF 50V X7R) is over-designed for +3V3 (50V on 3.3V rail)
+      Detail: 50V-rated capacitor on a 3.3V rail — margin 93.4%.
+      Fix:    Consider 10V rating — 50V is significantly over-designed for a 3.3V rail
+      Stages: schematic
+
+--- debug ---
+  [4] INFO DI-DET: Debug interface J3 (debug): pass
+      Detail: Detected debug debug interface on connector J3.
+      Stages: schematic, bring_up
+
+--- decoupling ---
+  [5] INFO DC-DET: Decoupling on VBUS_FUSED
+      Detail: Decoupling capacitors on power rail VBUS_FUSED
+      Stages: schematic, layout
+  [6] INFO DC-DET: Decoupling on +3V3
+      Detail: Decoupling capacitors on power rail +3V3
+      Stages: schematic, layout
+
+--- decoupling_coverage ---
+  [7] INFO DO-DET: Decoupling coverage on VBUS_FUSED
+      Detail: Decoupling frequency coverage for rail VBUS_FUSED
+      Stages: schematic
+  [8] INFO DO-DET: Decoupling coverage on +3V3
+      Detail: Decoupling frequency coverage for rail +3V3
+      Stages: schematic
+
+--- i2c_bus ---
+  [9] INFO DO-DET: I2C SCL bus on I2C_SCL
+      Detail: I2C SCL bus detected with 3 device(s)
+      Stages: schematic
+  [10] INFO DO-DET: I2C SDA bus on I2C_SDA
+      Detail: I2C SDA bus detected with 3 device(s)
+      Stages: schematic
+
+--- led_control ---
+  [11] INFO LA-AUD: LED D2 (GREEN STATUS) [resistor_limited]
+      Detail: LED audit: D2 using resistor_limited drive method.
+      Component: D2
+      Stages: schematic
+
+--- lifecycle ---
+  [12] INFO LC-007: Lifecycle audit not run — --lifecycle flag not passed
+      Detail: Component lifecycle / obsolescence audit was not run this session. Reason: --lifecycle flag not passed (run with --lifecycle to query DigiKey / Mouser / LCSC / element14 for obsolescence + operating-temp coverage; requires network + API keys). The review cannot report active / NRND / EOL / obsolete status, last-time-buy windows, or operating-temperature coverage for any BOM part. Treat the lifecycle section of the report as 'not performed'.
+      Fix:    Run with --lifecycle (requires DIGIKEY_CLIENT_ID / MOUSER_SEARCH_API_KEY / ELEMENT14_API_KEY env vars; LCSC needs no auth) to populate this section. If intentionally skipped, note it explicitly in the report's 'Not Performed' section.
+      Stages: schematic
+
+--- passive_filters ---
+  [13] INFO RC-DET: RC filter R4/C5 at 15.92Hz
+      Detail: low-pass RC filter
+      Stages: schematic
+  [14] INFO RC-DET: RC filter R7/C6 at 159154.94Hz
+      Detail: low-pass RC filter
+      Stages: schematic
+  [15] INFO RC-DET: RC filter R8/C9 at 159.15Hz
+      Detail: low-pass RC filter
+      Stages: schematic
+
+--- power ---
+  [16] ERROR PP-001: IC power pin U3.1 (VDD) has no DC path to a power rail (net 'SGP_VDD')
+      Detail: Pin U3.1 (VDD) is type=power_in on net 'SGP_VDD'. Graph walk (≤2 hops, rejecting capacitor edges, accepting resistors≤1Ω, inductors, ferrite beads, bridged solder jumpers) did not reach a named power rail. The pin is likely AC-coupled to ground only — the IC will not power up reliably.
+      Fix:    Verify the schematic for this pin: the DC route must go through a conducting element (direct wire, 0Ω resistor, inductor, ferrite bead, or bridged solder jumper) — not a capacitor. If the intent was to tie VCC through an LC filter, add the missing inductor or 0Ω in series.
+      Stages: schematic
+
+--- power_management ---
+  [17] INFO PP-DET: Power path U7 (TPS22919DCKR) [load_switch]
+      Detail: Detected load_switch power path component U7.
+      Component: U7
+      Stages: schematic
+  [18] INFO PR-DET: Regulator U5 switching
+      Detail: Power regulator (switching) detected
+      Component: U5
+      Stages: schematic
+
+--- protection ---
+  [19] INFO EP-AUD: ESD audit J1 (generic): partial coverage
+      Detail: ESD protection audit for generic connector J1: partial coverage.
+      Stages: schematic
+  [20] INFO EP-AUD: ESD audit J2 (header): none coverage
+      Detail: ESD protection audit for header connector J2: none coverage.
+      Stages: schematic
+  [21] INFO EP-AUD: ESD audit J3 (header): none coverage
+      Detail: ESD protection audit for header connector J3: none coverage.
+      Stages: schematic
+  [22] INFO PD-DET: Protection D1 diode
+      Detail: Protection device (diode) on VBUS_FUSED
+      Component: D1
+      Stages: schematic
+  [23] INFO PD-DET: Protection F1 fuse
+      Detail: Fuse/polyfuse protection on VBUS_FUSED
+      Component: F1
+      Stages: schematic
+  [24] INFO PD-DET: Protection U6 esd_ic
+      Detail: IC-based ESD protection device detected
+      Component: U6
+      Stages: schematic
+
+--- protocol_integrity ---
+  [25] INFO PR-004: USB connector J1: D- (USB_CONN_DM) missing series resistor
+      Detail: USB D- on J1 has no series resistor (typically 22R for USB 2.0).
+      Fix:    Add a 22R series resistor on D- near the connector.
+      Stages: schematic
+  [26] INFO PR-004: USB connector J1: D+ (USB_CONN_DP) missing series resistor
+      Detail: USB D+ on J1 has no series resistor (typically 22R for USB 2.0).
+      Fix:    Add a 22R series resistor on D+ near the connector.
+      Stages: schematic
+
+--- sensors ---
+  [27] INFO SI-DET: Sensor U4 (SHT40-AD1B-R2) [environmental/i2c]
+      Detail: Detected environmental sensor IC U4.
+      Component: U4
+      Stages: schematic
+
+--- signal_integrity ---
+  [28] WARNING PU-001: U2 pin SEL (__unnamed_10) missing pull-down resistor
+      Detail: Pin SEL on U2 (SPS30) is connected to net __unnamed_10 but has no pull-down resistor. This pin requires a defined logic level at startup.
+      Fix:    Add a 10k pull-down resistor from __unnamed_10 to GND.
+      Stages: schematic
+
+--- switching_regulator ---
+  [29] INFO DO-DET: Switching regulator U5
+      Detail: Switching regulator with inductor L1
+      Component: U5
+      Stages: schematic
+
+--- usb_compliance ---
+  [30] WARNING UC-001: No decoupling capacitor on VBUS at J1
+      Detail: USB connector J1: no capacitor found on the VBUS net. USB 2.0 recommends >=1uF bulk + 100nF local decoupling on VBUS.
+      Fix:    Add bulk (>=1uF) + 100nF decoupling on VBUS near J1.
+      Stages: schematic
+  [31] WARNING UC-002: No ESD/TVS protection on VBUS at J1
+      Detail: USB connector J1: no TVS diode or ESD array found on the VBUS net. VBUS is exposed to external ESD/surge events.
+      Fix:    Add a TVS diode or ESD array on VBUS at J1.
+      Stages: schematic
+
+--- usb_data ---
+  [32] INFO DO-DET: USB data line USB_DM
+      Detail: USB data net USB_DM detected
+      Stages: schematic
+  [33] INFO DO-DET: USB data line USB_DP
+      Detail: USB data net USB_DP detected
+      Stages: schematic
+
+--- wireless ---
+  [34] INFO WL-001: wifi/ble module U1 (ESP32-C3-WROOM-02-N4)
+      Detail: Detected wifi_ble wireless module U1 (ESP32-C3-WROOM-02-N4).
+      Stages: schematic, bring_up
+
+Total: 34 (1 error, 3 warnings, 30 info)

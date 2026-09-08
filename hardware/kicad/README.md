@@ -1,17 +1,21 @@
 # KiCad hardware sources
 
-`bench-breathe.kicad_sch` is the editable M2 component-selection carrier. It stores exact Manufacturer/MPN/LCSC/Datasheet/Package/BOM Comments fields for the selected controller, sensors, regulator, and USB protection parts.
+`bench-breathe.kicad_sch` is the editable A0 electrical schematic. It stores exact Manufacturer/MPN/LCSC/Datasheet/Package/BOM Comments fields and implements USB power/data/CC sensing, the fixed 3.3 V regulator, controller, sensors, programming/debug, local status/button, and named test points.
 
-It is intentionally **not an electrically complete schematic**: every staging pin is marked no-connect and several parts use generic pin-count symbols. This keeps issue #2 metadata editable without implying that application circuits, pin mappings, footprints, or electrical behavior have passed design review.
+Project-local functional symbols and the SGP40 land pattern live under `lib/`; `generate_schematic.py` regenerates the editable source, and `validate_schematic.py` checks critical datasheet pin maps, net assignments, BOM properties, ERC JSON, and the PDF export.
 
-Issue #3 must:
+Reproduce the static evidence from the repository root:
 
-1. replace generic symbols with functional symbols verified against manufacturer pin tables;
-2. assign and verify footprints pad-by-pad;
-3. wire USB power/data/CC, regulation, controller, sensors, debug, status/input, and test points;
-4. run design ERC and analyzers on that electrically complete revision.
+```bash
+python3 -m venv /tmp/bench-breathe-ksa-env
+/tmp/bench-breathe-ksa-env/bin/pip install -r hardware/kicad/requirements.txt
+KICAD_SYMBOL_DIR=/usr/share/kicad/symbols /tmp/bench-breathe-ksa-env/bin/python hardware/kicad/generate_schematic.py
+kicad-cli sch erc hardware/kicad/bench-breathe.kicad_sch --format json --output hardware/kicad/reports/erc.json --exit-code-violations
+kicad-cli sch export pdf hardware/kicad/bench-breathe.kicad_sch --output hardware/kicad/exports/bench-breathe-schematic.pdf
+KICAD_SYMBOL_DIR=/usr/share/kicad/symbols /tmp/bench-breathe-ksa-env/bin/python hardware/kicad/validate_schematic.py --erc hardware/kicad/reports/erc.json --footprint-dir /usr/share/kicad/footprints
+```
 
-The zero-violation M2 ERC only proves that the staging sheet is internally well-formed with intentional no-connects. It is not evidence that the future circuit works.
+The zero-violation ERC and validator are **static schematic evidence only**. They do not prove PCB routing, signal integrity, radio performance, power transients, assembly, sensor accuracy, or physical operation.
 
 Re-run the metadata gate from the repository root with:
 

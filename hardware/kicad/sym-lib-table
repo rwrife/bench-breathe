@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "bench-breathe")(type "KiCad")(uri "${KIPRJMOD}/lib/bench-breathe.kicad_sym")(options "")(descr "Bench Breathe project-local functional symbols"))
+)
