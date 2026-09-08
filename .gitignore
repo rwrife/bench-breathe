@@ -21,3 +21,6 @@ node_modules/
 # Generated data/logs
 *.log
 .tmp/
+
+# Downloaded manufacturer PDFs and extraction cache (regenerable)
+datasheets/

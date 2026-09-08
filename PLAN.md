@@ -74,7 +74,7 @@ The normative details and acceptance evidence are in `hardware/requirements.md`.
 |---|---|---|---|
 | M1 — Requirements and risk baseline | Measurable requirements, architecture, safety, risk register | Cross-document review against issue #1 | Baseline documented; implementation evidence not started |
 | M2 — Component selection | Select exact controller/sensors/power/protection parts and populate Manufacturer/MPN | Manufacturer datasheets reviewed; pin/electrical decisions cited in `hardware/component-selection.md`; metadata carried in editable KiCad staging sheet | Static selection complete; no circuit/bench evidence |
-| M3 — KiCad schematic | Editable project and complete schematic | ERC output, analyzer output, documented exceptions | Not started |
+| M3 — KiCad schematic | Editable project and complete schematic | ERC output, analyzer output, documented exceptions | Complete on issue #3: editable A0 source, clean KiCad 9 ERC, PDF, and static analyzer evidence |
 | M4 — BOM export | Generate source-of-truth tracking BOM | `bom/bom.csv` regenerated from schematic properties | Not started |
 | M5 — PCB layout | Place/route board, keepouts, thermal/current paths | DRC and applicable layout analyzer evidence | Not started |
 | M6 — Firmware baseline | Repeatable build/flash, acquisition, quality states, retention, protocol | Unit/contract tests plus documented hardware smoke-test boundary | Not started |

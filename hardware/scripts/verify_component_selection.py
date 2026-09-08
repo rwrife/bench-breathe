@@ -108,10 +108,7 @@ def main() -> int:
     if missing_bom:
         errors.append(f"missing SELECTED_M2 BOM MPNs: {', '.join(missing_bom)}")
 
-    unexpected = sorted(set(components) - set(EXPECTED))
     missing = sorted(set(EXPECTED) - set(components))
-    if unexpected:
-        errors.append(f"unexpected components: {', '.join(unexpected)}")
     if missing:
         errors.append(f"missing components: {', '.join(missing)}")
 
@@ -178,7 +175,7 @@ def main() -> int:
         return 1
 
     print("COMPONENT_SELECTION_METADATA: PASS")
-    print(f"components={len(components)}")
+    print(f"components={len(components)} (selected_m2_subset={len(EXPECTED)})")
     print(f"selected_m2_bom_rows={len(selected_bom_rows)}")
     print("required_fields=Manufacturer,MPN,Datasheet,Package,BOM Comments")
     expected_lcsc_count = sum(1 for _, _, lcsc in EXPECTED.values() if lcsc)
@@ -186,7 +183,7 @@ def main() -> int:
         f"expected_lcsc_fields={expected_lcsc_count} "
         "(one manufacturer-ambiguous match intentionally omitted)"
     )
-    print("electrical_connectivity=not_checked (M2 staging sheet; issue #3)")
+    print("electrical_connectivity=not_checked_by_this_metadata_gate (run hardware/kicad/validate_schematic.py)")
     return 0
 
 

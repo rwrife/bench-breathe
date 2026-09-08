@@ -62,7 +62,7 @@ The device remains authoritative for sensor state, timestamps, configuration lim
 
 - `hardware/requirements.md` — normative MVP requirements and safety boundaries
 - `hardware/kicad/bench-breathe.kicad_pro` — editable KiCad project container
-- `hardware/kicad/bench-breathe.kicad_sch` — M2 component-selection carrier and BOM-property source; issue #3 owns the complete electrical schematic
+- `hardware/kicad/bench-breathe.kicad_sch` — editable A0 electrical schematic and schematic-owned BOM-property source
 - `hardware/kicad/bench-breathe.kicad_pcb` — planned editable PCB
 - `hardware/component-selection.md` — exact M2 parts, manufacturer-datasheet checks, static power budget, and dated availability snapshot
 - `firmware/` — device firmware and verification
@@ -78,7 +78,7 @@ The current `bom/preliminary-bom.csv` is planning input only. It is not a valida
 |---|---|
 | M1 — Requirements, architecture, safety, and risk baseline | Baseline documented |
 | M2 — Datasheet-backed component selection | Static selection complete; physical validation not started |
-| M3 — Editable KiCad schematic and ERC | Not started |
+| M3 — Editable KiCad schematic and ERC | Complete: clean KiCad 9 ERC plus static validation and PDF review export |
 | M4 — Schematic-source BOM export | Not started |
 | M5 — PCB layout and DRC | Not started |
 | M6 — Firmware baseline | Not started |
@@ -86,7 +86,7 @@ The current `bom/preliminary-bom.csv` is planning input only. It is not a valida
 | M8 — Integration and bench bring-up | Not started |
 | M9 — Mature fabrication/release bundle | Not started |
 
-No completed KiCad design, firmware/app build, simulation, ERC/DRC result, assembled prototype, bench measurement, field result, or certification is claimed at this stage.
+The editable A0 schematic and its static ERC/analyzer evidence are complete. PCB layout/DRC, simulation, firmware/app builds, assembly, bench measurement, field results, and certification are not claimed.
 
 ## Development start
 
