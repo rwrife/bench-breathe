@@ -1,0 +1,8 @@
+Item,Category,Non_Schematic_Item,Quantity,Function,Planning_Status,Sourcing_Status,Related_Schematic_Ref,Notes
+NS-001,PCB Fabrication,Custom 2-layer PCB,1,Device carrier board,PLANNED - issue #5 layout,UNRESOLVED - fabrication quote required at maturity,,"Gerbers/drill exported after DRC sign-off; not a stuffed-BOM line."
+NS-002,Cabling,SPS30 mating cable (JST ZHR-5 to SPS30),1,Off-board PM sensor harness,PLANNED - per BB-002 note,UNRESOLVED - live sourcing required,,Mates J2 (board-side S5B-PH-K-S) to off-board SPS30; verify assembled continuity during bring-up.
+NS-003,Enclosure,3D-printable or off-the-shelf vented enclosure,1,Mechanical protection and airflow guidance,PLANNED - bring-up guide (issue #8),UNRESOLVED - live sourcing required,,Keep serviceable and repairable; venting required for SPS30 airflow path.
+NS-004,Cabling,USB-C cable (data-capable),1,Power and setup link,PLANNED - bring-up checklist (issue #8),UNRESOLVED - live sourcing required,,Include known-good cable in bring-up checklist.
+NS-005,Fasteners,Standoffs/screws/nuts assortment,1 set,Assembly and mounting,PLANNED - depends on enclosure,UNRESOLVED - live sourcing required,,Exact lengths depend on enclosure choice (NS-003).
+NS-006,Debug Access,USB-to-UART/debug adapter,1,Bring-up and recovery accessory,OPTIONAL - native USB + J3 header cover most cases,UNRESOLVED - live sourcing required,J3,3.3 V only header; adapter needed only if U0TXD/U0RXD console is preferred during bring-up.
+NS-007,Power Supply,Certified USB wall adapter 5V >=1A,1,External power source,PLANNED - user-supplied acceptable,UNRESOLVED - live sourcing required,,SELV/USB-only safety boundary; user may already own a certified adapter.
