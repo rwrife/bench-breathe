@@ -68,9 +68,11 @@ The device remains authoritative for sensor state, timestamps, configuration lim
 - `firmware/` — device firmware and verification
 - `app/` — local companion web app
 - `docs/protocol.md` — device/app contract
-- `bom/bom.csv` — future generated tracking BOM from schematic properties
+- `bom/bom.csv` — generated stuffed-BOM export from schematic properties (regenerate with `python3 bom/export_bom.py`, gate with `python3 bom/verify_bom.py`)
+- `bom/README.md` — BOM workflow, sourcing/pricing policy, and file roles
+- `bom/non-schematic-items.csv` — enclosure, cables, fasteners, adapter, power supply, and PCB fab with explicit planning status
 
-The current `bom/preliminary-bom.csv` is planning input only. It is not a validated or fabrication-ready BOM.
+The current `bom/preliminary-bom.csv` is the issue-#2 planning list reconciled against the schematic (`Schematic_Refs`/`Reconciliation` columns). It is not a fabrication-ready BOM; `bom/bom.csv` is the export artifact.
 
 ## Project status
 
@@ -79,7 +81,7 @@ The current `bom/preliminary-bom.csv` is planning input only. It is not a valida
 | M1 — Requirements, architecture, safety, and risk baseline | Baseline documented |
 | M2 — Datasheet-backed component selection | Static selection complete; physical validation not started |
 | M3 — Editable KiCad schematic and ERC | Complete: clean KiCad 9 ERC plus static validation and PDF review export |
-| M4 — Schematic-source BOM export | Not started |
+| M4 — Schematic-source BOM export | Complete: `bom/bom.csv` generated from schematic properties with reproducibility + no-fabricated-price gate (`bom/verify_bom.py`) |
 | M5 — PCB layout and DRC | Not started |
 | M6 — Firmware baseline | Not started |
 | M7 — Companion app baseline | Not started |
