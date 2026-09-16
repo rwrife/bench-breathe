@@ -1,0 +1,75 @@
+
+/+3V3 (7.31 mm): Pad 3 [/+3V3] of U4 on F.Cu <-> Track [/+3V3] on F.Cu, length 5.7795 mm
+    straight: BLOCKED by track [/SGP_VDD] 51.54,31.74->51.54,28.45
+    L-h: BLOCKED by track [/I2C_SCL] 50.02,25.04->55.08,30.11
+    L-v: BLOCKED by pad C6.1 [/SGP_VDD]
+
+/CC1_SENSE (22.18 mm): Pad 4 [/CC1_SENSE] of U6 on F.Cu <-> Track [/CC1_SENSE] on F.Cu, length 19.8377 mm
+    straight: BLOCKED by pad U6.1 [/USB_CONN_DM]
+    L-h: BLOCKED by pad U6.7 []
+    L-v: BLOCKED by pad U6.1 [/USB_CONN_DM]
+
+/CC2_SENSE (10.65 mm): Pad 5 [/CC2_SENSE] of U6 on F.Cu <-> Pad B5 [/CC2_SENSE] of J1 on F.Cu
+    straight: BLOCKED by pad U6.6 []
+    L-h: BLOCKED by pad U6.6 []
+    L-v: BLOCKED by track [/USB_DM] 24.77,67.50->23.21,67.50
+
+/CC2_SENSE (3.94 mm): Pad B5 [/CC2_SENSE] of J1 on F.Cu <-> Pad 1 [/CC2_SENSE] of R2 on F.Cu
+    straight: BLOCKED by pad J1.A9 [/VBUS]
+    L-h: BLOCKED by pad J1.A9 [/VBUS]
+    L-v: BLOCKED by pad TP15.1 [/PM_ENABLE]
+
+/CC2_SENSE (49.09 mm): Track [/CC2_SENSE] on F.Cu, length 0.8669 mm <-> Pad 1 [/CC2_SENSE] of R2 on F.Cu
+    straight: BLOCKED by track [/+3V3] 14.40,30.00->43.33,30.00
+    L-h: BLOCKED by pad TP8.1 [/BOOT_GPIO9]
+    L-v: BLOCKED by pad TP9.1 [/I2C_SDA]
+
+/I2C_SCL (5.34 mm): Track [/I2C_SCL] on F.Cu, length 4.9455 mm <-> Pad 2 [/I2C_SCL] of U4 on F.Cu
+    straight: CLEAR
+    L-h: BLOCKED by pad U4.1 [/I2C_SDA]
+    L-v: BLOCKED by track [/STATUS_LED_K] 43.21,27.75->43.59,27.38
+
+/I2C_SCL (16.50 mm): Track [/I2C_SCL] on F.Cu, length 1.1332 mm <-> Pad 1 [/I2C_SCL] of TP10 on F.Cu
+    straight: BLOCKED by pad D2.2 [/STATUS_LED_A]
+    L-h: BLOCKED by track [/STATUS_LED_K] 43.21,40.00->43.21,27.75
+    L-v: BLOCKED by pad R6.1 [/+3V3]
+
+/I2C_SDA (4.03 mm): Track [/I2C_SDA] on F.Cu, length 0.7559 mm <-> Pad 1 [/I2C_SDA] of U4 on F.Cu
+    straight: BLOCKED by pad U4.2 [/I2C_SCL]
+    L-h: BLOCKED by track [/+3V3] 54.14,30.50->43.83,30.50
+    L-v: BLOCKED by pad U4.2 [/I2C_SCL]
+
+/REG_PG (27.67 mm): Track [/REG_PG] on F.Cu, length 0.3892 mm <-> Pad 15 [/REG_PG] of U1 on F.Cu
+    straight: BLOCKED by pad U1.13 [/USB_DM]
+    L-h: BLOCKED by pad TP9.1 [/I2C_SDA]
+    L-v: BLOCKED by track [/+3V3] 14.40,30.00->43.33,30.00
+
+/SW_NODE (5.63 mm): Pad 1 [/SW_NODE] of L1 on F.Cu <-> Pad 7 [/SW_NODE] of U5 on F.Cu
+    straight: BLOCKED by pad U5.8 [/REG_PG]
+    L-h: BLOCKED by pad L1.2 [/+3V3]
+    L-v: BLOCKED by pad U5.1 [/GND]
+
+/USER_BUTTON_N (25.96 mm): Track [/USER_BUTTON_N] on F.Cu, length 0.2435 mm <-> Pad 10 [/USER_BUTTON_N] of U1 on F.Cu
+    straight: BLOCKED by track [/+3V3] 26.37,16.07->26.37,39.03
+    L-h: BLOCKED by track [/+3V3] 26.37,16.07->26.37,39.03
+    L-v: BLOCKED by pad U1.9 [/GND]
+
+/VBUS (23.17 mm): Track [/VBUS] on F.Cu, length 4.5963 mm <-> Pad B9 [/VBUS] of J1 on F.Cu
+    straight: BLOCKED by pad R11.1 [/USB_CONN_DM]
+    L-h: BLOCKED by pad R11.2 [/USB_DM]
+    L-v: BLOCKED by pad F1.2 [/VBUS_FUSED]
+
+/VBUS (4.80 mm): Pad B9 [/VBUS] of J1 on F.Cu <-> Pad A9 [/VBUS] of J1 on F.Cu
+    straight: BLOCKED by pad J1.A5 [/CC1_SENSE]
+    L-h: BLOCKED by pad J1.A5 [/CC1_SENSE]
+    L-v: BLOCKED by pad J1.A5 [/CC1_SENSE]
+
+/VBUS_FUSED (19.28 mm): Track [/VBUS_FUSED] on F.Cu, length 0.1945 mm <-> Track [/VBUS_FUSED] on F.Cu, length 0.2860 mm
+    straight: BLOCKED by pad R12.1 [/USB_CONN_DP]
+    L-h: BLOCKED by pad R12.1 [/USB_CONN_DP]
+    L-v: BLOCKED by pad C1.2 [/GND]
+
+/VBUS_FUSED (12.71 mm): Pad 1 [/VBUS_FUSED] of TP2 on F.Cu <-> Track [/VBUS_FUSED] on F.Cu, length 0.2500 mm
+    straight: BLOCKED by pad U5. []
+    L-h: BLOCKED by pad TP1.1 [/VBUS]
+    L-v: BLOCKED by pad R3.2 [/REG_PG]

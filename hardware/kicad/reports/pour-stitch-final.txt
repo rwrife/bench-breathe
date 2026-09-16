@@ -1,0 +1,8 @@
+DOC F2 cells=1 reason=sub-grid sliver
+DOC F3 cells=16 reason=no legal via cell
+DOC F6 cells=1 reason=sub-grid sliver
+DOC F8 cells=1 reason=sub-grid sliver
+DOC F9 cells=3 reason=sub-grid sliver
+DOC F11 cells=1 reason=sub-grid sliver
+DOC F15 cells=2 reason=sub-grid sliver
+placed=0 documented=7
