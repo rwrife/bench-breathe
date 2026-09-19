@@ -11,7 +11,7 @@ Bench Breathe has three implementation layers and one shared contract:
 1. **Hardware platform** — USB 5 V SELV input, protection/regulation, ESP32-C3 module, sensor interfaces, local status/input, debug access, test points, PCB, and enclosure interfaces.
 2. **Device firmware** — sensor drivers, deterministic acquisition, quality states, bounded local retention, atomic configuration, local protocol server, serial recovery/export, and reset behavior.
 3. **Companion web app** — local setup, status/history visualization, event annotation, configuration, explicit export, and user-facing advisory/safety language.
-4. **Versioned protocol contract** — the current `docs/protocol.md` Draft v0 is the seed for data shapes, units, validity, errors, limits, authorization, and compatibility rules. Issue #7 must finalize it before firmware/app integration; ownership is shared across firmware and app changes.
+4. **Versioned protocol contract** — `docs/protocol.md` is finalized contract v1 (issue #7): data shapes, units, validity, errors, limits, authorization, and compatibility rules. The firmware baseline still emits the v0-compatible serial line; adoption is tracked as T-1 in `docs/release-checklist.md`. Ownership is shared across firmware and app changes.
 
 ```mermaid
 flowchart LR
@@ -43,7 +43,11 @@ The firmware remains authoritative for sensor state, timestamps, retained record
 
 The MVP companion is compiled to static assets and served directly by the device. This makes the browser UI and API same-origin and keeps normal operation independent of an internet host or separately installed server. A sustained physical-button action opens a visibly indicated setup window for at most 10 minutes and reveals a single-use, >=128-bit random pairing code over the physically connected USB serial link. The otherwise unauthenticated same-origin pairing endpoint accepts that code only during the window; its first successful exchange returns the per-device API credential, consumes the code, and closes the endpoint. Static assets and minimal non-sensitive health may remain public, but every other API resource requires the credential. State-changing requests also receive same-origin request protection, and USB-serial mutations require a separate recent physical confirmation. The MVP uses local HTTP rather than claiming LAN confidentiality: setup documentation must state that it is for a trusted private LAN only and must not be exposed through port forwarding.
 
-`docs/protocol.md` is still Draft v0. Its endpoint list is planning input, not a finalized wire contract; issue #7 owns the exact request/response schemas and app implementation after the access and deployment constraints above are preserved.
+`docs/protocol.md` is finalized contract v1. The access and deployment
+constraints above are normative in it (public subset, pairing window,
+`X-BB-Auth`, same-origin request protection, button-armed serial
+mutations, trusted-LAN-only statement, port-forward prohibition).
+Implementation deltas are tracked in `docs/release-checklist.md` (T-1..T-3).
 
 ## Technology choices and rationale
 
@@ -75,12 +79,12 @@ The normative details and acceptance evidence are in `hardware/requirements.md`.
 | M1 — Requirements and risk baseline | Measurable requirements, architecture, safety, risk register | Cross-document review against issue #1 | Baseline documented; implementation evidence not started |
 | M2 — Component selection | Select exact controller/sensors/power/protection parts and populate Manufacturer/MPN | Manufacturer datasheets reviewed; pin/electrical decisions cited in `hardware/component-selection.md`; metadata carried in editable KiCad staging sheet | Static selection complete; no circuit/bench evidence |
 | M3 — KiCad schematic | Editable project and complete schematic | ERC output, analyzer output, documented exceptions | Complete on issue #3: editable A0 source, clean KiCad 9 ERC, PDF, and static analyzer evidence |
-| M4 — BOM export | Generate source-of-truth tracking BOM | `bom/bom.csv` regenerated from schematic properties | Not started |
-| M5 — PCB layout | Place/route board, keepouts, thermal/current paths | DRC and applicable layout analyzer evidence | Not started |
-| M6 — Firmware baseline | Repeatable build/flash, acquisition, quality states, retention, protocol | Unit/contract tests plus documented hardware smoke-test boundary | Not started |
-| M7 — Companion app | Setup, status/history, event tags, config, export | Build/lint/tests and protocol fixtures | Not started |
-| M8 — Integration and bring-up | Assemble and exercise a named prototype revision | Static, simulation, and bench evidence kept distinct | Not started |
-| M9 — Mature fabrication/release bundle | Fabrication files, BOM, assembly/bring-up docs, source archive | Regenerated artifacts and release checklist | Not started |
+| M4 — BOM export | Generate source-of-truth tracking BOM | `bom/bom.csv` regenerated from schematic properties | Complete on issue #4 with regeneration + no-fabricated-price gate |
+| M5 — PCB layout | Place/route board, keepouts, thermal/current paths | DRC and applicable layout analyzer evidence | A0 evidence board (issue #5): DRC 0 violations with 15 documented unrouted stubs — NOT fab release; A1 stub closure is tracked T-4 in `docs/release-checklist.md` |
+| M6 — Firmware baseline | Repeatable build/flash, acquisition, quality states, retention, protocol | Unit/contract tests plus documented hardware smoke-test boundary | Baseline complete as static+simulation evidence (issue #6); hardware smoke-test boundary remains bench-gated |
+| M7 — Companion app | Setup, status/history, event tags, config, export | Build/lint/tests and protocol fixtures | App MVP + contract v1 complete (issue #7) against dev simulator; real-device integration closes with T-3/bench |
+| M8 — Integration and bring-up | Assemble and exercise a named prototype revision | Static, simulation, and bench evidence kept distinct | Bring-up procedure published (issue #8, `docs/bring-up.md`); bench execution awaiting a prototype — no evidence claimed |
+| M9 — Mature fabrication/release bundle | Fabrication files, BOM, assembly/bring-up docs, source archive | Regenerated artifacts and release checklist | Checklist published (issue #8, `docs/release-checklist.md`); Gerbers/drill/CPL blocked on T-4 |
 
 M2 depends on M1. M3 depends on M2. M4 depends on M3. M5 depends on M3 and M4. M6 may begin after M2 but hardware claims wait for M3/M5. M7 may scaffold after the protocol boundary is stable, but integration closes only with M6. M8 and M9 depend on all applicable earlier evidence.
 

@@ -54,7 +54,7 @@ Users must follow tool/material manufacturer guidance and appropriate ventilatio
 - **Hardware:** USB input/protection/regulation, ESP32-C3, PM/VOC/temp-humidity interfaces, status/input, debug/test access, PCB, and enclosure interface.
 - **Firmware:** deterministic acquisition, validity states, bounded retention, atomic configuration, versioned local API, and serial recovery.
 - **Companion web app:** setup, status/history, event notes, configuration, explicit export/delete, and accessible advisory messaging.
-- **Shared protocol:** [`docs/protocol.md`](docs/protocol.md) is currently Draft v0; issue #7 must finalize versioned HTTP/serial schemas, units, limits, authorization, quality/error states, and compatibility rules before integration.
+- **Shared protocol:** [`docs/protocol.md`](docs/protocol.md) is finalized contract v1 (HTTP + USB-serial shapes, units, limits, errors, authorization). The firmware baseline still streams the v0-compatible serial line; adoption is tracked in `docs/release-checklist.md` (T-1).
 
 The device remains authoritative for sensor state, timestamps, configuration limits, and retained records. The app presents that contract and must not turn null/invalid values into apparently valid measurements. For the MVP, compiled app assets are served by the device for offline same-origin use. A physical, time-bounded setup action issues the per-device local credential; this reduces casual LAN access but does not make cleartext HTTP confidential or safe for internet exposure.
 
@@ -67,7 +67,9 @@ The device remains authoritative for sensor state, timestamps, configuration lim
 - `hardware/component-selection.md` — exact M2 parts, manufacturer-datasheet checks, static power budget, and dated availability snapshot
 - `firmware/` — device firmware and verification
 - `app/` — local companion web app
-- `docs/protocol.md` — device/app contract
+- `docs/protocol.md` — device/app contract (v1)
+- `docs/bring-up.md` — integration bring-up procedure, wiring/pinouts, calibration, troubleshooting matrix, and evidence ledger
+- `docs/release-checklist.md` — fabrication/release artifact gates and open tracked items
 - `bom/bom.csv` — generated stuffed-BOM export from schematic properties (regenerate with `python3 bom/export_bom.py`, gate with `python3 bom/verify_bom.py`)
 - `bom/README.md` — BOM workflow, sourcing/pricing policy, and file roles
 - `bom/non-schematic-items.csv` — enclosure, cables, fasteners, adapter, power supply, and PCB fab with explicit planning status
@@ -82,13 +84,20 @@ The current `bom/preliminary-bom.csv` is the issue-#2 planning list reconciled a
 | M2 — Datasheet-backed component selection | Static selection complete; physical validation not started |
 | M3 — Editable KiCad schematic and ERC | Complete: clean KiCad 9 ERC plus static validation and PDF review export |
 | M4 — Schematic-source BOM export | Complete: `bom/bom.csv` generated from schematic properties with reproducibility + no-fabricated-price gate (`bom/verify_bom.py`) |
-| M5 — PCB layout and DRC | Not started |
-| M6 — Firmware baseline | Not started |
-| M7 — Companion app baseline | Not started |
-| M8 — Integration and bench bring-up | Not started |
-| M9 — Mature fabrication/release bundle | Not started |
+| M5 — PCB layout and DRC | A0 evidence board complete: 0 DRC violations with 15 documented unrouted stubs — **not fab release** (see `hardware/pcb-notes.md` §Residuals and `docs/release-checklist.md`) |
+| M6 — Firmware baseline | Baseline implemented + natively verified (19 unit tests, pinned device build). Bench flash/flash-recovery and power gating on hardware not performed |
+| M7 — Companion app baseline | App MVP + contract v1 complete; 13/13 contract tests against the dev simulator only — never run against a real device |
+| M8 — Integration and bench bring-up | Bring-up procedure, wiring/pinouts, and troubleshooting published (`docs/bring-up.md`); all bench steps unexecuted — no prototype exists |
+| M9 — Mature fabrication/release bundle | Gate checklist published (`docs/release-checklist.md`); fab artifacts blocked on A1 stub closure |
 
-The editable A0 schematic and its static ERC/analyzer evidence are complete. PCB layout/DRC, simulation, firmware/app builds, assembly, bench measurement, field results, and certification are not claimed.
+The editable A0 schematic and its static ERC/analyzer evidence are complete,
+as is the A0 evidence PCB (0 DRC violations, 15 documented unrouted stubs —
+not fab release), the natively verified firmware baseline, and the
+contract-tested companion app (simulator-evidence only). PCB fab export,
+simulation, firmware/app builds on hardware, assembly, bench measurement,
+field results, and certification are not claimed. See
+`docs/bring-up.md` (bench procedure and evidence ledger) and
+`docs/release-checklist.md` (release gates and open tracked items).
 
 ## Development start
 
