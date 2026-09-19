@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bench Breathe</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Bench Breathe</h1>
+  <div id="conn-badge" class="badge off">not connected</div>
+</header>
+
+<main>
+  <!-- Setup / connect -->
+  <section id="setup" class="card">
+    <h2>Connect device</h2>
+    <p class="muted">Local-first: the app talks only to your device on your
+    network. Nothing leaves this browser unless you export it.</p>
+    <label>Device URL <input id="device-url" type="url" placeholder="http://bench-breathe.local" size="28"></label>
+    <div id="pair-box" hidden>
+      <p>Device is waiting for pairing. Press and hold the device button,
+      read the pairing code from the USB serial console, then enter it:</p>
+      <label>Pairing code <input id="pair-code" type="text" autocomplete="off" size="28"></label>
+    </div>
+    <div class="row">
+      <button id="btn-connect">Check device</button>
+      <button id="btn-pair" hidden>Pair</button>
+      <button id="btn-forget" class="ghost">Forget device</button>
+    </div>
+    <pre id="setup-msg" class="msg" hidden></pre>
+    <details class="threat">
+      <summary>Security &amp; privacy notes</summary>
+      <ul>
+        <li>MVP traffic is plain HTTP on your trusted LAN — it is <b>not</b>
+            confidential against someone already on that LAN. Never
+            port-forward or expose the device to the internet.</li>
+        <li>You own all captured data: no cloud, no telemetry, no analytics.
+            The device URL and pairing token live only in this browser's
+            local storage. <b>Forget device</b> clears them.</li>
+        <li>The device has no internet-hosted assets and makes no outbound
+            cloud connections.</li>
+      </ul>
+    </details>
+  </section>
+
+  <!-- Live status -->
+  <section id="status" class="card" hidden>
+    <h2>Live</h2>
+    <div id="health-line" class="muted"></div>
+    <div id="channels" class="channels"></div>
+    <canvas id="chart" width="640" height="160"></canvas>
+    <div id="chart-legend" class="muted"></div>
+    <div class="row">
+      <label>Tag event:
+        <select id="event-tag">
+          <option>session_start</option><option>window_open</option>
+          <option>fan_on</option><option>custom</option>
+        </select>
+      </label>
+      <input id="event-note" placeholder="note (optional)" maxlength="200">
+      <button id="btn-event">Add event</button>
+    </div>
+  </section>
+
+  <!-- History -->
+  <section id="history" class="card" hidden>
+    <h2>History</h2>
+    <div class="row">
+      <label>Range
+        <select id="hist-range">
+          <option value="all" selected>retained window</option>
+          <option value="3600">last hour</option>
+          <option value="86400">last 24 h</option>
+        </select>
+      </label>
+      <button id="btn-refresh">Refresh</button>
+    </div>
+    <div id="hist-summary" class="muted"></div>
+    <div class="row">
+      <button id="btn-export-csv">Export CSV</button>
+      <button id="btn-export-json">Export JSON</button>
+    </div>
+  </section>
+
+  <!-- Settings -->
+  <section id="settings" class="card" hidden>
+    <h2>Device settings</h2>
+    <div class="row">
+      <label>Sampling interval (ms) <input id="cfg-interval" type="number" min="2000" max="60000" step="1000"></label>
+      <label>Label <input id="cfg-label" maxlength="31"></label>
+      <button id="btn-save-cfg">Save</button>
+    </div>
+    <div class="row">
+      <button id="btn-sync-time" class="ghost">Sync device clock from this computer</button>
+      <span id="clock-state" class="muted"></span>
+    </div>
+    <pre id="cfg-msg" class="msg" hidden></pre>
+  </section>
+</main>
+
+<footer class="muted">
+  Bench Breathe companion app · protocol contract v1 · local-first · advisory
+  trend logging only (not a health device)
+</footer>
+<script src="app.js"></script>
+</body>
+</html>
