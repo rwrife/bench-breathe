@@ -1,0 +1,12 @@
+{
+  "name": "bench-breathe-companion-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Bench Breathe local companion web app + dev stub device (protocol contract v1). Zero dependencies.",
+  "type": "module",
+  "scripts": {
+    "dev": "node dev/stub-server.mjs",
+    "test": "node --test test/contract.test.mjs"
+  },
+  "engines": { "node": ">=20" }
+}
